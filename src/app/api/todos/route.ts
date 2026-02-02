@@ -1,13 +1,13 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const todos = await prisma.todo.findMany({ orderBy: { createdAt: 'desc' } });
+  const todos = await prisma.todo.findMany({ orderBy: { createdAt: "desc" } });
   return Response.json(todos);
 }
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const title = (body?.title ?? '').trim();
+  const title = (body?.title ?? "").trim();
   const remindInMinutes =
     body.remindInMinutes === null || body.remindInMinutes === undefined
       ? null
@@ -15,13 +15,13 @@ export async function POST(req: Request) {
   const remindAtRaw = body?.remindAt ?? body?.remind_at ?? null;
 
   if (!title) {
-    return Response.json({ error: 'Title is required' }, { status: 400 });
+    return Response.json({ error: "Title is required" }, { status: 400 });
   }
 
   const remindAt =
-    remindAtRaw !== null && remindAtRaw !== undefined && remindAtRaw !== ''
+    remindAtRaw !== null && remindAtRaw !== undefined && remindAtRaw !== ""
       ? new Date(remindAtRaw as string)
-      : typeof remindInMinutes === 'number' &&
+      : typeof remindInMinutes === "number" &&
           Number.isFinite(remindInMinutes) &&
           remindInMinutes > 0
         ? new Date(Date.now() + remindInMinutes * 60_000)
