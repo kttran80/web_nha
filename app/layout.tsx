@@ -55,7 +55,7 @@ export default function RootLayout({
                 Todo
               </Link>
               <Link href="/deal-filters" style={{ color: "#111827" }}>
-                Deal Filters
+                Deal
               </Link>
             </nav>
           </div>
