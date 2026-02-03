@@ -87,7 +87,10 @@ export default function DealFiltersPage() {
     loadRows();
   }, []);
 
-  const canCreate = useMemo(() => newRow.profile.trim().length > 0, [newRow.profile]);
+  const canCreate = useMemo(
+    () => newRow.profile.trim().length > 0,
+    [newRow.profile]
+  );
 
   async function saveRow(draft: DealFilterDraft) {
     if (!draft.id) return;
@@ -164,117 +167,138 @@ export default function DealFiltersPage() {
     }
   }
 
-  return (
-    <div style={{ padding: '2rem', maxWidth: 980, margin: '0 auto' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
-        Deal Filters
-      </h1>
+  const styles = {
+    page: {
+      padding: '2rem',
+      maxWidth: 980,
+      margin: '0 auto',
+      color: '#e5e7eb',
+    },
+    title: {
+      fontSize: '2rem',
+      fontWeight: 700,
+      marginBottom: '0.5rem',
+      color: '#f8fafc',
+    },
+    subtitle: {
+      color: '#9ca3af',
+      marginBottom: '1.5rem',
+    },
+    section: {
+      padding: '1.25rem',
+      border: '1px solid rgba(255,255,255,0.35)',
+      borderRadius: 16,
+      marginBottom: '2rem',
+      background: 'rgba(0,0,0,0.35)',
+      boxShadow: '0 18px 40px rgba(0,0,0,0.35)',
+      backdropFilter: 'blur(6px)',
+    },
+    card: {
+      border: '1px solid rgba(255,255,255,0.3)',
+      borderRadius: 16,
+      padding: '1rem 1.1rem',
+      background: 'rgba(0,0,0,0.25)',
+      boxShadow: '0 12px 28px rgba(0,0,0,0.35)',
+    },
+    label: {
+      display: 'grid',
+      gap: '0.4rem',
+      color: '#e5e7eb',
+      fontWeight: 600,
+    },
+    input: {
+      width: '100%',
+      padding: '0.65rem 0.8rem',
+      borderRadius: 12,
+      border: '1px solid rgba(255,255,255,0.4)',
+      background: 'rgba(0,0,0,0.55)',
+      color: '#f9fafb',
+      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.04)',
+    },
+    buttonPrimary: {
+      marginTop: '1rem',
+      padding: '0.7rem 1.1rem',
+      borderRadius: 12,
+      border: '1px solid rgba(255,255,255,0.5)',
+      background: 'rgba(0,0,0,0.6)',
+      color: '#f9fafb',
+      fontWeight: 600,
+      boxShadow: '0 10px 20px rgba(0,0,0,0.3)',
+    },
+    buttonAccent: {
+      padding: '0.45rem 0.9rem',
+      borderRadius: 12,
+      border: '1px solid rgba(255,255,255,0.6)',
+      background: 'rgba(0,0,0,0.6)',
+      color: '#f9fafb',
+      fontWeight: 600,
+    },
+  } as const;
 
-      <p style={{ color: '#555', marginBottom: '1.5rem' }}>
+  return (
+    <div style={styles.page}>
+      <h1 style={styles.title}>Deal Filters</h1>
+
+      <p style={styles.subtitle}>
         Manage keyword, merchant, and category filters for your Slickdeals ingestion.
       </p>
 
-      <section
-        style={{
-          padding: '1.25rem',
-          border: '1px solid #d0d4db',
-          borderRadius: 12,
-          marginBottom: '2rem',
-          background: '#f8f9fb',
-          boxShadow: '0 8px 20px rgba(0,0,0,0.04)',
-        }}
-      >
+      <section style={styles.section}>
         <h2 style={{ fontSize: '1.3rem', marginBottom: '0.75rem' }}>Add New Filter</h2>
         <div style={{ display: 'grid', gap: '0.9rem' }}>
-          <label style={{ display: 'grid', gap: '0.4rem' }}>
-            <span style={{ fontWeight: 600 }}>Profile</span>
+          <label style={styles.label}>
+            <span>Profile</span>
             <input
               value={newRow.profile}
               onChange={(e) => setNewRow({ ...newRow, profile: e.target.value })}
               placeholder="default"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.8rem',
-                borderRadius: 8,
-                border: '1px solid #c5c9d2',
-                background: '#fff',
-              }}
+              style={styles.input}
             />
           </label>
-          <label style={{ display: 'grid', gap: '0.4rem' }}>
-            <span style={{ fontWeight: 600 }}>Keywords</span>
+          <label style={styles.label}>
+            <span>Keywords</span>
             <input
               value={newRow.keywordsText}
               onChange={(e) => setNewRow({ ...newRow, keywordsText: e.target.value })}
               placeholder="macbook, mac mini, ipad"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.8rem',
-                borderRadius: 8,
-                border: '1px solid #c5c9d2',
-                background: '#fff',
-              }}
+              style={styles.input}
             />
           </label>
-          <label style={{ display: 'grid', gap: '0.4rem' }}>
-            <span style={{ fontWeight: 600 }}>Merchants</span>
+          <label style={styles.label}>
+            <span>Merchants</span>
             <input
               value={newRow.merchantsText}
               onChange={(e) => setNewRow({ ...newRow, merchantsText: e.target.value })}
               placeholder="bestbuy, amazon"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.8rem',
-                borderRadius: 8,
-                border: '1px solid #c5c9d2',
-                background: '#fff',
-              }}
+              style={styles.input}
             />
           </label>
-          <label style={{ display: 'grid', gap: '0.4rem' }}>
-            <span style={{ fontWeight: 600 }}>Categories</span>
+          <label style={styles.label}>
+            <span>Categories</span>
             <input
               value={newRow.categoriesText}
               onChange={(e) => setNewRow({ ...newRow, categoriesText: e.target.value })}
               placeholder="electronics, laptops"
-              style={{
-                width: '100%',
-                padding: '0.65rem 0.8rem',
-                borderRadius: 8,
-                border: '1px solid #c5c9d2',
-                background: '#fff',
-              }}
+              style={styles.input}
             />
           </label>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <label style={{ display: 'grid', gap: '0.4rem' }}>
-              <span style={{ fontWeight: 600 }}>Min price</span>
+            <label style={styles.label}>
+              <span>Min price</span>
               <input
                 value={newRow.minPriceText}
                 onChange={(e) => setNewRow({ ...newRow, minPriceText: e.target.value })}
                 placeholder="0"
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.8rem',
-                  borderRadius: 8,
-                  border: '1px solid #c5c9d2',
-                  background: '#fff',
-                }}
+                style={styles.input}
               />
             </label>
-            <label style={{ display: 'grid', gap: '0.4rem' }}>
-              <span style={{ fontWeight: 600 }}>Max price</span>
+            <label style={styles.label}>
+              <span>Max price</span>
               <input
                 value={newRow.maxPriceText}
                 onChange={(e) => setNewRow({ ...newRow, maxPriceText: e.target.value })}
                 placeholder="999"
-                style={{
-                  width: '100%',
-                  padding: '0.65rem 0.8rem',
-                  borderRadius: 8,
-                  border: '1px solid #c5c9d2',
-                  background: '#fff',
-                }}
+                style={styles.input}
               />
             </label>
           </div>
@@ -282,15 +306,7 @@ export default function DealFiltersPage() {
         <button
           onClick={createRow}
           disabled={!canCreate || savingId === -1}
-          style={{
-            marginTop: '1rem',
-            padding: '0.7rem 1.1rem',
-            borderRadius: 8,
-            border: '1px solid #1d4ed8',
-            background: '#2563eb',
-            color: '#fff',
-            fontWeight: 600,
-          }}
+          style={styles.buttonPrimary}
         >
           {savingId === -1 ? 'Creating...' : 'Create filter'}
         </button>
@@ -299,41 +315,31 @@ export default function DealFiltersPage() {
       <section>
         <h2 style={{ fontSize: '1.2rem', marginBottom: '0.75rem' }}>Existing Filters</h2>
         {loading && <p>Loading...</p>}
-        {error && <p style={{ color: 'crimson' }}>{error}</p>}
+        {error && <p style={{ color: '#f87171' }}>{error}</p>}
         {!loading && rows.length === 0 && <p>No filters yet.</p>}
 
         <div style={{ display: 'grid', gap: '1.25rem' }}>
           {rows.map((row, index) => (
-            <div
-              key={row.id ?? index}
-              style={{
-                border: '1px solid #d0d4db',
-                borderRadius: 12,
-                padding: '1rem 1.1rem',
-                background: '#fff',
-                boxShadow: '0 10px 24px rgba(0,0,0,0.05)',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+            <div key={row.id ?? index} style={styles.card}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  marginBottom: '0.75rem',
+                }}
+              >
                 <strong style={{ fontSize: '1rem' }}>#{row.id}</strong>
                 <button
                   onClick={() => saveRow(row)}
                   disabled={savingId === row.id}
-                  style={{
-                    padding: '0.45rem 0.9rem',
-                    borderRadius: 8,
-                    border: '1px solid #0f766e',
-                    background: '#14b8a6',
-                    color: '#fff',
-                    fontWeight: 600,
-                  }}
+                  style={styles.buttonAccent}
                 >
                   {savingId === row.id ? 'Saving...' : 'Save'}
                 </button>
               </div>
               <div style={{ display: 'grid', gap: '0.85rem' }}>
-                <label style={{ display: 'grid', gap: '0.4rem' }}>
-                  <span style={{ fontWeight: 600 }}>Profile</span>
+                <label style={styles.label}>
+                  <span>Profile</span>
                   <input
                     value={row.profile}
                     onChange={(e) => {
@@ -341,17 +347,11 @@ export default function DealFiltersPage() {
                       updated[index] = { ...row, profile: e.target.value };
                       setRows(updated);
                     }}
-                    style={{
-                      width: '100%',
-                      padding: '0.65rem 0.8rem',
-                      borderRadius: 8,
-                      border: '1px solid #c5c9d2',
-                      background: '#fff',
-                    }}
+                    style={styles.input}
                   />
                 </label>
-                <label style={{ display: 'grid', gap: '0.4rem' }}>
-                  <span style={{ fontWeight: 600 }}>Keywords</span>
+                <label style={styles.label}>
+                  <span>Keywords</span>
                   <input
                     value={row.keywordsText}
                     onChange={(e) => {
@@ -359,17 +359,11 @@ export default function DealFiltersPage() {
                       updated[index] = { ...row, keywordsText: e.target.value };
                       setRows(updated);
                     }}
-                    style={{
-                      width: '100%',
-                      padding: '0.65rem 0.8rem',
-                      borderRadius: 8,
-                      border: '1px solid #c5c9d2',
-                      background: '#fff',
-                    }}
+                    style={styles.input}
                   />
                 </label>
-                <label style={{ display: 'grid', gap: '0.4rem' }}>
-                  <span style={{ fontWeight: 600 }}>Merchants</span>
+                <label style={styles.label}>
+                  <span>Merchants</span>
                   <input
                     value={row.merchantsText}
                     onChange={(e) => {
@@ -377,17 +371,11 @@ export default function DealFiltersPage() {
                       updated[index] = { ...row, merchantsText: e.target.value };
                       setRows(updated);
                     }}
-                    style={{
-                      width: '100%',
-                      padding: '0.65rem 0.8rem',
-                      borderRadius: 8,
-                      border: '1px solid #c5c9d2',
-                      background: '#fff',
-                    }}
+                    style={styles.input}
                   />
                 </label>
-                <label style={{ display: 'grid', gap: '0.4rem' }}>
-                  <span style={{ fontWeight: 600 }}>Categories</span>
+                <label style={styles.label}>
+                  <span>Categories</span>
                   <input
                     value={row.categoriesText}
                     onChange={(e) => {
@@ -395,18 +383,12 @@ export default function DealFiltersPage() {
                       updated[index] = { ...row, categoriesText: e.target.value };
                       setRows(updated);
                     }}
-                    style={{
-                      width: '100%',
-                      padding: '0.65rem 0.8rem',
-                      borderRadius: 8,
-                      border: '1px solid #c5c9d2',
-                      background: '#fff',
-                    }}
+                    style={styles.input}
                   />
                 </label>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                  <label style={{ display: 'grid', gap: '0.4rem' }}>
-                    <span style={{ fontWeight: 600 }}>Min price</span>
+                  <label style={styles.label}>
+                    <span>Min price</span>
                     <input
                       value={row.minPriceText}
                       onChange={(e) => {
@@ -414,17 +396,11 @@ export default function DealFiltersPage() {
                         updated[index] = { ...row, minPriceText: e.target.value };
                         setRows(updated);
                       }}
-                      style={{
-                        width: '100%',
-                        padding: '0.65rem 0.8rem',
-                        borderRadius: 8,
-                        border: '1px solid #c5c9d2',
-                        background: '#fff',
-                      }}
+                      style={styles.input}
                     />
                   </label>
-                  <label style={{ display: 'grid', gap: '0.4rem' }}>
-                    <span style={{ fontWeight: 600 }}>Max price</span>
+                  <label style={styles.label}>
+                    <span>Max price</span>
                     <input
                       value={row.maxPriceText}
                       onChange={(e) => {
@@ -432,13 +408,7 @@ export default function DealFiltersPage() {
                         updated[index] = { ...row, maxPriceText: e.target.value };
                         setRows(updated);
                       }}
-                      style={{
-                        width: '100%',
-                        padding: '0.65rem 0.8rem',
-                        borderRadius: 8,
-                        border: '1px solid #c5c9d2',
-                        background: '#fff',
-                      }}
+                      style={styles.input}
                     />
                   </label>
                 </div>
