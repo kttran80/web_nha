@@ -120,29 +120,59 @@ export default function TodoApp() {
     }
   }
 
+  const styles = {
+    section: {
+      border: '1px solid var(--card-border)',
+      borderRadius: 16,
+      padding: 16,
+      background: 'var(--card-bg)',
+      boxShadow: '0 18px 40px rgba(0,0,0,0.25)',
+    },
+    label: {
+      display: 'grid',
+      gap: 6,
+      color: 'var(--button-text)',
+      fontSize: 12,
+      fontWeight: 600,
+      letterSpacing: 0.3,
+    },
+    input: {
+      width: '100%',
+      padding: '10px 12px',
+      borderRadius: 12,
+      border: '1px solid var(--input-border)',
+      background: 'var(--input-bg)',
+      color: 'var(--input-text)',
+    },
+    button: {
+      padding: '10px 14px',
+      borderRadius: 12,
+      border: '1px solid var(--button-border)',
+      background: 'var(--button-bg)',
+      color: 'var(--button-text)',
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+    },
+    smallButton: {
+      border: '1px solid var(--button-border)',
+      borderRadius: 12,
+      padding: '6px 10px',
+      cursor: 'pointer',
+      background: 'var(--button-bg)',
+      color: 'var(--button-text)',
+    },
+  } as const;
+
   return (
-    <section
-      style={{
-        border: '1px solid #ddd',
-        borderRadius: 12,
-        padding: 16,
-      }}
-    >
+    <section style={styles.section}>
       <div style={{ display: 'grid', gap: 12, marginBottom: 12 }}>
-        <label style={{ display: 'grid', gap: 6 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
-            Task
-          </span>
+        <label style={styles.label}>
+          <span>Task</span>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder='Add a task...'
-            style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: 10,
-              border: '1px solid #c7c7c7',
-            }}
+            style={styles.input}
             onKeyDown={(e) => {
               if (e.key === 'Enter') addTodo();
             }}
@@ -157,34 +187,20 @@ export default function TodoApp() {
             alignItems: 'end',
           }}
         >
-          <label style={{ display: 'grid', gap: 6 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
-              Reminder time
-            </span>
+          <label style={styles.label}>
+            <span>Reminder time</span>
             <input
               type='datetime-local'
               value={remindAt}
               onChange={(e) => setRemindAt(e.target.value)}
-              style={{
-                padding: '10px 12px',
-                borderRadius: 10,
-                border: '1px solid #c7c7c7',
-                minWidth: 240,
-              }}
+              style={styles.input}
               disabled={loading}
             />
           </label>
           <button
             onClick={addTodo}
             disabled={loading || !title.trim()}
-            style={{
-              padding: '10px 14px',
-              borderRadius: 10,
-              border: '1px solid #333',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              height: 42,
-            }}
+            style={{ ...styles.button, height: 42 }}
           >
             ADD
           </button>
@@ -211,8 +227,9 @@ export default function TodoApp() {
               display: 'grid',
               gap: 8,
               padding: '10px 12px',
-              border: '1px solid #eee',
-              borderRadius: 10,
+              border: '1px solid var(--card-border)',
+              borderRadius: 16,
+              background: 'var(--card-bg)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -234,12 +251,7 @@ export default function TodoApp() {
               <button
                 onClick={() => remove(t)}
                 disabled={loading}
-                style={{
-                  border: '1px solid #ccc',
-                  borderRadius: 10,
-                  padding: '6px 10px',
-                  cursor: 'pointer',
-                }}
+                style={styles.smallButton}
                 aria-label='Delete'
                 title='Delete'
               >
@@ -254,10 +266,8 @@ export default function TodoApp() {
                 alignItems: 'end',
               }}
             >
-              <label style={{ display: 'grid', gap: 6 }}>
-                <span style={{ fontSize: 12, fontWeight: 600, letterSpacing: 0.3 }}>
-                  Reminder time
-                </span>
+              <label style={styles.label}>
+                <span>Reminder time</span>
                 <input
                   type='datetime-local'
                   value={reminderDrafts[t.id] ?? ''}
@@ -267,25 +277,14 @@ export default function TodoApp() {
                       [t.id]: e.target.value,
                     }))
                   }
-                  style={{
-                    padding: '8px 10px',
-                    borderRadius: 10,
-                    border: '1px solid #c7c7c7',
-                    minWidth: 240,
-                  }}
+                  style={styles.input}
                   disabled={loading}
                 />
               </label>
               <button
                 onClick={() => updateReminder(t)}
                 disabled={loading}
-                style={{
-                  border: '1px solid #333',
-                  borderRadius: 10,
-                  padding: '8px 12px',
-                  cursor: 'pointer',
-                  height: 38,
-                }}
+                style={styles.button}
               >
                 Update reminder
               </button>

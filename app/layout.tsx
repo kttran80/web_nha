@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import ThemeToggle from "@/app/components/ThemeToggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,8 +35,8 @@ export default function RootLayout({
             top: 0,
             zIndex: 10,
             backdropFilter: "blur(8px)",
-            background: "rgba(255,255,255,0.9)",
-            borderBottom: "1px solid #e5e7eb",
+            background: "var(--header-bg)",
+            borderBottom: "1px solid var(--header-border)",
           }}
         >
           <div
@@ -50,13 +51,21 @@ export default function RootLayout({
             }}
           >
             <div style={{ fontWeight: 700, letterSpacing: 0.3 }}>Web nha</div>
-            <nav style={{ display: "flex", gap: 16, fontSize: 14 }}>
-              <Link href="/" style={{ color: "#111827" }}>
+            <nav
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 16,
+                fontSize: 14,
+              }}
+            >
+              <Link href="/" style={{ color: "var(--text)" }}>
                 Todo
               </Link>
-              <Link href="/deal-filters" style={{ color: "#111827" }}>
+              <Link href="/deal-filters" style={{ color: "var(--text)" }}>
                 Deal
               </Link>
+              <ThemeToggle />
             </nav>
           </div>
         </header>
